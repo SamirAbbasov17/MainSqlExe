@@ -6,26 +6,24 @@
 ALTER FUNCTION dbo.ufnCalculateAge
 (
   @birthdate DATE,
-  @ageThreshold INT
+  @isage INT
 )
 RETURNS VARCHAR(50)
 AS
 BEGIN
   DECLARE @currentDate DATE = GETDATE();
-  DECLARE @age INT;
-
-  SET @age = DATEDIFF(YEAR, @birthdate, @currentDate);
-  SET @birthdate = DATEADD(YEAR, @age, @birthdate);
+  DECLARE @isbirthdate DATE = DATEADD(YEAR, @isage, @birthdate);
   
-  IF (@currentDate > @birthdate)
+  
+  IF (YEAR(@currentDate) <= YEAR(@isbirthdate) )
   BEGIN
-    IF (DATEDIFF(DAY, @birthdate, @currentDate) >= @ageThreshold)
-      RETURN 'Hic biri odemiyor';
-    ELSE IF (DATEDIFF(MONTH, @birthdate, @currentDate) > 0)
+    IF (DATEDIFF(DAY ,@currentDate ,@isbirthdate) <= 31)
+      RETURN 'Yil ve Ay oduyor';
+    ELSE IF (DATEDIFF(YEAR, @currentDate,@isbirthdate) = 0)
       RETURN 'Yil oduyor';
     ELSE
-      RETURN 'Ay ve gun oduyor';
+      RETURN 'Ay gun ve yil odemiyor';
   END
-
+ 
   RETURN 'Ay, gun ve yil oduyor';
 END;

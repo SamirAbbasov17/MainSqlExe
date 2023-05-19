@@ -17,4 +17,4 @@ SELECT * FROM Employees  WHERE FirstName NOT LIKE '[A-I]%'
 SELECT * FROM Employees  WHERE FirstName LIKE '%[^T]'
 
 
-SELECT dbo.ufnCalculateAge('10/04/2001',22) AS [Calculate Age]
+SELECT dbo.ufnCalculateAge('10/04/1995',22) AS [Calculate Age]
